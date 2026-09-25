@@ -158,22 +158,22 @@ export default function App() {
             
               <div key="ACTIVE FLEET ASSETS" className="p-4 rounded-xl bg-zinc-900/60 border border-zinc-800/80 backdrop-blur-sm">
                 <span className="text-[10px] font-mono text-zinc-400 uppercase tracking-wider block">ACTIVE FLEET ASSETS</span>
-                <p className="text-lg sm:text-xl font-bold font-mono text-amber-400 mt-1">142 UNITS</p>
+                <p className="text-lg sm:text-xl font-bold font-mono text-amber-400 mt-1">{"142 UNITS"}</p>
               </div>
             
               <div key="ON-SITE UTILIZATION" className="p-4 rounded-xl bg-zinc-900/60 border border-zinc-800/80 backdrop-blur-sm">
                 <span className="text-[10px] font-mono text-zinc-400 uppercase tracking-wider block">ON-SITE UTILIZATION</span>
-                <p className="text-lg sm:text-xl font-bold font-mono text-amber-400 mt-1">94.2%</p>
+                <p className="text-lg sm:text-xl font-bold font-mono text-amber-400 mt-1">{"94.2%"}</p>
               </div>
             
               <div key="TELEMATICS RUNTIME" className="p-4 rounded-xl bg-zinc-900/60 border border-zinc-800/80 backdrop-blur-sm">
                 <span className="text-[10px] font-mono text-zinc-400 uppercase tracking-wider block">TELEMATICS RUNTIME</span>
-                <p className="text-lg sm:text-xl font-bold font-mono text-amber-400 mt-1">18,450 HRS</p>
+                <p className="text-lg sm:text-xl font-bold font-mono text-amber-400 mt-1">{"18,450 HRS"}</p>
               </div>
             
               <div key="DAMAGE DEPOSIT RESERVE" className="p-4 rounded-xl bg-zinc-900/60 border border-zinc-800/80 backdrop-blur-sm">
                 <span className="text-[10px] font-mono text-zinc-400 uppercase tracking-wider block">DAMAGE DEPOSIT RESERVE</span>
-                <p className="text-lg sm:text-xl font-bold font-mono text-amber-400 mt-1">$380,000</p>
+                <p className="text-lg sm:text-xl font-bold font-mono text-amber-400 mt-1">{"$380,000"}</p>
               </div>
             
           </div>

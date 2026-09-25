@@ -177,22 +177,22 @@ export const AdminPortalModal: React.FC<AdminPortalModalProps> = ({ isOpen, onCl
                   
                     <div key="ACTIVE FLEET ASSETS" className="p-3 rounded-lg bg-zinc-950 border border-zinc-800">
                       <span className="text-xs text-zinc-500 font-mono">ACTIVE FLEET ASSETS</span>
-                      <p className="text-lg font-bold text-amber-400 font-mono mt-0.5">142 UNITS</p>
+                      <p className="text-lg font-bold text-amber-400 font-mono mt-0.5">{"142 UNITS"}</p>
                     </div>
                   
                     <div key="ON-SITE UTILIZATION" className="p-3 rounded-lg bg-zinc-950 border border-zinc-800">
                       <span className="text-xs text-zinc-500 font-mono">ON-SITE UTILIZATION</span>
-                      <p className="text-lg font-bold text-amber-400 font-mono mt-0.5">94.2%</p>
+                      <p className="text-lg font-bold text-amber-400 font-mono mt-0.5">{"94.2%"}</p>
                     </div>
                   
                     <div key="TELEMATICS RUNTIME" className="p-3 rounded-lg bg-zinc-950 border border-zinc-800">
                       <span className="text-xs text-zinc-500 font-mono">TELEMATICS RUNTIME</span>
-                      <p className="text-lg font-bold text-amber-400 font-mono mt-0.5">18,450 HRS</p>
+                      <p className="text-lg font-bold text-amber-400 font-mono mt-0.5">{"18,450 HRS"}</p>
                     </div>
                   
                     <div key="DAMAGE DEPOSIT RESERVE" className="p-3 rounded-lg bg-zinc-950 border border-zinc-800">
                       <span className="text-xs text-zinc-500 font-mono">DAMAGE DEPOSIT RESERVE</span>
-                      <p className="text-lg font-bold text-amber-400 font-mono mt-0.5">$380,000</p>
+                      <p className="text-lg font-bold text-amber-400 font-mono mt-0.5">{"$380,000"}</p>
                     </div>
                   
                 </div>
