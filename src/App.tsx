@@ -2,66 +2,127 @@ import React, { useState } from 'react';
 import { 
   Truck, Shield, Award, ArrowRight, Calendar, DollarSign, Lock, 
   ChevronRight, CheckCircle2, Sparkles, Layers, Terminal, Server,
-  AlertCircle, Check, Phone, Plane, Thermometer, Compass, Fuel, Gauge
+  AlertCircle, Check, Phone, Plane, Thermometer, Compass, Fuel, Gauge,
+  Activity, Radio, Wrench, Sliders, X, FileText, MapPin, HardHat
 } from 'lucide-react';
 import { AdminPortalModal } from './AdminPortalModal.tsx';
 
-interface ShowcaseItem {
+interface Machine {
   id: string;
-  title: string;
-  subtitle: string;
-  rate: string;
-  status: string;
-  features: string[];
+  serial: string;
+  model: string;
+  category: string;
+  weight: string;
+  hours: number;
+  fuel: number;
+  hydraulics: string;
+  location: string;
+  status: 'READY' | 'ON RENT' | 'INSPECTION' | 'IN TRANSIT';
+  dayRate: number;
+  weekRate: number;
+  specs: {
+    engine: string;
+    capacity: string;
+    flow: string;
+    telematics: string;
+  };
   img: string;
 }
 
-const ITEMS: ShowcaseItem[] = [
+const MACHINES: Machine[] = [
   {
-    "id": "HP-336",
-    "title": "CAT 336 Next-Gen Hydraulic Excavator",
-    "subtitle": "Tier 4 Final // 36-Ton Operating Weight // 3D Grade Control",
-    "rate": "$1,850 / Day • $6,400 / Wk",
-    "status": "READY FOR SITE MOBILIZATION",
-    "features": [
-      "Auxiliary High-Flow Hydraulics",
-      "Grade Assist & 2D E-Fence",
-      "Payload Measurement System",
-      "Heavy-Duty Rock Bucket (2.4 yd³)"
-    ],
-    "img": "https://images.unsplash.com/photo-1578575437130-527eed3abbec"
+    id: "CAT-336-01",
+    serial: "CAT0336HDK8821",
+    model: "CAT 336 Next-Gen Hydraulic Excavator",
+    category: "Heavy Earthmoving",
+    weight: "36.2 Metric Tons",
+    hours: 1420,
+    fuel: 94,
+    hydraulics: "3,850 PSI (Optimal)",
+    location: "Yard Bay 02 — Main Staging",
+    status: "READY",
+    dayRate: 1850,
+    weekRate: 6400,
+    specs: {
+      engine: "Cat C9.3B Tier 4 Final (314 HP)",
+      capacity: "2.4 yd³ Severe-Duty Rock Bucket",
+      flow: "148 gpm High-Flow Auxiliary",
+      telematics: "Product Link 4G Satellite Active"
+    },
+    img: "https://images.unsplash.com/photo-1578575437130-527eed3abbec"
   },
   {
-    "id": "HP-D8T",
-    "title": "CAT D8T Waste & Heavy Earthmoving Dozer",
-    "subtitle": "394 HP C15 Engine // Semi-Universal Blade // Multi-Shank Ripper",
-    "rate": "$2,400 / Day • $8,200 / Wk",
-    "status": "ON-SITE DISPATCH READY",
-    "features": [
-      "Automated Blade Assist (ABA)",
-      "Heavy Duty Extended Undercarriage",
-      "Dual Tilt Cylinders",
-      "Integrated ROPS Cab with Telematics"
-    ],
-    "img": "https://images.unsplash.com/photo-1504307651254-35680f356dfd"
+    id: "CAT-D8T-04",
+    serial: "CAT0D8TXB9014",
+    model: "CAT D8T Heavy Track Bulldozer",
+    category: "Dozer & Grading",
+    weight: "39.8 Metric Tons",
+    hours: 2180,
+    fuel: 78,
+    hydraulics: "3,400 PSI (Optimal)",
+    location: "Metro Rail Corridor Jobsite #4",
+    status: "ON RENT",
+    dayRate: 2400,
+    weekRate: 8200,
+    specs: {
+      engine: "Cat C15 ACERT (394 HP)",
+      capacity: "11.3 yd³ Semi-Universal Blade",
+      flow: "64 gpm Automated Blade Assist",
+      telematics: "Trimble 3D GPS Grade Control"
+    },
+    img: "https://images.unsplash.com/photo-1504307651254-35680f356dfd"
   },
   {
-    "id": "HP-TH12",
-    "title": "Manitou MT 1840 Easy Telehandler",
-    "subtitle": "18M Lifting Height // 4,000 KG Max Payload // 4WD Crab Steer",
-    "rate": "$950 / Day • $3,200 / Wk",
-    "status": "AVAILABLE // YARD BAY 04",
-    "features": [
-      "Hydrostatic Transmission",
-      "Frame Leveling Mechanism",
-      "Load Moment Indicator (LMI)",
-      "Hydraulic Quick-Attach Fork Carriage"
-    ],
-    "img": "https://images.unsplash.com/photo-1581094794329-c8112a89af12"
+    id: "MAN-1840-02",
+    serial: "MAN01840EA3319",
+    model: "Manitou MT 1840 Easy Telehandler",
+    category: "Material Handling",
+    weight: "11.8 Metric Tons",
+    hours: 890,
+    fuel: 88,
+    hydraulics: "3,900 PSI (Optimal)",
+    location: "Yard Bay 07 — Ready Line",
+    status: "READY",
+    dayRate: 950,
+    weekRate: 3200,
+    specs: {
+      engine: "Deutz 3.6L Tier 4 (100 HP)",
+      capacity: "18m Reach / 4,000 kg Payload",
+      flow: "45 gpm Load Sensing Hydrostatic",
+      telematics: "Omnicall Telehandler Sensor Mesh"
+    },
+    img: "https://images.unsplash.com/photo-1581094794329-c8112a89af12"
+  },
+  {
+    id: "VOL-L250-01",
+    serial: "VOL0L250HE7712",
+    model: "Volvo L250H Heavy Wheel Loader",
+    category: "Quarry & Loading",
+    weight: "35.0 Metric Tons",
+    hours: 3410,
+    fuel: 42,
+    hydraulics: "3,100 PSI (Service Due)",
+    location: "Bay 01 — Maintenance & Dyno",
+    status: "INSPECTION",
+    dayRate: 2100,
+    weekRate: 7200,
+    specs: {
+      engine: "Volvo D13J Tier 4F (395 HP)",
+      capacity: "6.7 yd³ Rehandling Spade-Nose Bucket",
+      flow: "135 gpm Electro-Hydraulic Servo",
+      telematics: "CareTrack Satellite Telematics"
+    },
+    img: "https://images.unsplash.com/photo-1580901068594-822831bc7754"
   }
 ];
 
 export default function App() {
+  const [selectedCategory, setSelectedCategory] = useState<string>('ALL');
+  const [selectedMachine, setSelectedMachine] = useState<Machine>(MACHINES[0]);
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const [rentalDays, setRentalDays] = useState(7);
+  const [dispatchSuccess, setDispatchSuccess] = useState(false);
+
   const [isAdminOpen, setIsAdminOpen] = useState(
     typeof window !== 'undefined' && (
       window.location.search.includes('admin') || 
@@ -69,257 +130,272 @@ export default function App() {
       window.location.hash === '#admin'
     )
   );
-  const [selectedItem, setSelectedItem] = useState(ITEMS[0].id);
-  const [inquiryName, setInquiryName] = useState('');
-  const [inquiryPhone, setInquiryPhone] = useState('');
-  const [submitted, setSubmitted] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!inquiryName || !inquiryPhone) return;
-    setSubmitted(true);
-    setTimeout(() => {
-      setSubmitted(false);
-      setInquiryName('');
-      setInquiryPhone('');
-    }, 4000);
+  const filtered = MACHINES.filter(m => 
+    selectedCategory === 'ALL' || m.status === selectedCategory
+  );
+
+  const handleInspect = (m: Machine) => {
+    setSelectedMachine(m);
+    setIsDrawerOpen(true);
+    setDispatchSuccess(false);
+  };
+
+  const calculateEstimate = (m: Machine, days: number) => {
+    if (days >= 7) {
+      const weeks = Math.floor(days / 7);
+      const remainingDays = days % 7;
+      return (weeks * m.weekRate) + (remainingDays * m.dayRate);
+    }
+    return days * m.dayRate;
   };
 
   return (
-    <div className="min-h-screen bg-[#0A0A0B] text-zinc-100 font-sans selection:bg-amber-500/20 selection:text-amber-400">
-      {/* Header */}
-      <header className="sticky top-0 z-40 bg-[#0A0A0B]/90 backdrop-blur-md border-b border-zinc-800/80 px-6 py-4">
-        <div className="max-w-7xl mx-auto flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-500 to-amber-700 flex items-center justify-center text-zinc-950 font-extrabold shadow-lg shadow-amber-600/20">
-              <Truck className="w-5 h-5 text-zinc-950" />
-            </div>
-            <div>
-              <span className="text-xs font-mono uppercase tracking-widest text-amber-500 font-semibold">Heavy Earthmoving & Plant Equipment Fleet OS</span>
-              <h1 className="text-lg font-bold tracking-tight text-white leading-none">HEAVY PLANT RENTAL OS</h1>
-            </div>
-          </div>
+    <div className="min-h-screen bg-[#0A0A0B] text-zinc-100 flex flex-col font-sans selection:bg-amber-500 selection:text-black">
+      {/* Top Telemetry Header */}
+      <header className="border-b border-zinc-800 bg-[#0D0E12] px-6 py-3.5 flex flex-wrap items-center justify-between gap-4 sticky top-0 z-30 font-mono text-sm">
+        <div className="flex items-center gap-3">
+          <div className="w-3 h-3 rounded-full bg-amber-500 animate-pulse" />
+          <span className="font-black tracking-widest text-amber-500 flex items-center gap-2 text-base">
+            <HardHat size={18} /> VULCAN YARD OPS // HEAVY PLANT & EARTHMOVING FLEET
+          </span>
+          <span className="text-zinc-600">|</span>
+          <span className="text-zinc-400 font-semibold uppercase text-xs">ARCHETYPE A: DENSE OPERATIONAL CONSOLE</span>
+        </div>
 
-          <div className="hidden md:flex items-center gap-8 text-xs font-medium uppercase tracking-wider text-zinc-400">
-            <a href="#inventory" className="hover:text-amber-400 transition">Fleet Roster</a>
-            <a href="#telemetry" className="hover:text-amber-400 transition">Telematics</a>
-            <a href="#specs" className="hover:text-amber-400 transition">Compliance</a>
-            <a href="#dispatch" className="hover:text-amber-400 transition">Book Dispatch</a>
+        <div className="flex items-center gap-4">
+          <div className="hidden sm:flex items-center gap-2 text-xs font-mono text-zinc-300">
+            <Radio size={14} className="text-emerald-400 animate-ping" />
+            <span>4G TELEMATICS: <strong className="text-emerald-400">100% SATELLITE LOCK</strong></span>
           </div>
-
-          <div className="flex items-center gap-3">
-            <button
-              onClick={() => setIsAdminOpen(true)}
-              className="px-4 py-2 rounded-lg bg-zinc-900 border border-amber-500/40 text-amber-400 hover:bg-amber-500/10 text-xs font-mono uppercase tracking-wider transition flex items-center gap-2"
-            >
-              <Lock className="w-3.5 h-3.5" />
-              <span>[ DISPATCH PASS ]</span>
-            </button>
-          </div>
+          <button 
+            onClick={() => setIsAdminOpen(true)}
+            className="px-3.5 py-1.5 bg-amber-500/10 hover:bg-amber-500/20 text-amber-400 border border-amber-500/40 rounded-lg text-xs font-mono font-bold transition-all"
+          >
+            [ ADMIN DISPATCH PASS ]
+          </button>
         </div>
       </header>
 
-      {/* Hero */}
-      <section className="relative pt-20 pb-24 px-6 overflow-hidden border-b border-zinc-800">
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_80%_at_50%_-20%,rgba(245,158,11,0.15),rgba(255,255,255,0))]"></div>
-        <div className="max-w-5xl mx-auto text-center relative z-10">
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-amber-500/10 border border-amber-500/20 text-amber-400 text-xs font-mono mb-6">
-            <Sparkles className="w-3.5 h-3.5" />
-            <span>COMMERCIAL FLEET ENGINE • 9.8 VERIFIED PRODUCTION GRADE</span>
-          </div>
-
-          <h2 className="text-4xl sm:text-6xl font-extrabold text-white tracking-tight leading-tight">
-            HEAVY <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-yellow-500">PLANT RENTAL OS</span>
-          </h2>
-
-          <p className="mt-6 text-lg sm:text-xl text-zinc-400 max-w-3xl mx-auto leading-relaxed">
-            Industrial Earthmoving, Telehandlers & Low-Loader Dispatch. High-utilization asset dispatch, real-time telemetry, and turnkey Supabase PostgreSQL database schemas.
-          </p>
-
-          <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
-            <a
-              href="#dispatch"
-              className="px-8 py-3.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-zinc-950 font-bold text-sm tracking-wide transition shadow-lg shadow-amber-500/25 flex items-center gap-2"
-            >
-              <span>Instant Fleet Dispatch</span>
-              <ArrowRight className="w-4 h-4" />
-            </a>
-            <button
-              onClick={() => setIsAdminOpen(true)}
-              className="px-8 py-3.5 rounded-xl bg-zinc-900 border border-zinc-700 hover:border-amber-500/40 text-zinc-200 text-sm font-semibold transition flex items-center gap-2"
-            >
-              <span>Launch Supervisor OS</span>
-              <span className="text-amber-400 font-mono text-xs font-bold">[plant2026]</span>
-            </button>
-          </div>
-
-          {/* Metrics Ticker */}
-          <div className="mt-16 grid grid-cols-2 sm:grid-cols-4 gap-4 max-w-4xl mx-auto text-left">
-            
-              <div key="ACTIVE FLEET ASSETS" className="p-4 rounded-xl bg-zinc-900/60 border border-zinc-800/80 backdrop-blur-sm">
-                <span className="text-xs font-semibold tracking-wider font-mono text-zinc-400 uppercase tracking-wider block">ACTIVE FLEET ASSETS</span>
-                <p className="text-lg sm:text-xl font-bold font-mono text-amber-400 mt-1">{"142 UNITS"}</p>
-              </div>
-            
-              <div key="ON-SITE UTILIZATION" className="p-4 rounded-xl bg-zinc-900/60 border border-zinc-800/80 backdrop-blur-sm">
-                <span className="text-xs font-semibold tracking-wider font-mono text-zinc-400 uppercase tracking-wider block">ON-SITE UTILIZATION</span>
-                <p className="text-lg sm:text-xl font-bold font-mono text-amber-400 mt-1">{"94.2%"}</p>
-              </div>
-            
-              <div key="TELEMATICS RUNTIME" className="p-4 rounded-xl bg-zinc-900/60 border border-zinc-800/80 backdrop-blur-sm">
-                <span className="text-xs font-semibold tracking-wider font-mono text-zinc-400 uppercase tracking-wider block">TELEMATICS RUNTIME</span>
-                <p className="text-lg sm:text-xl font-bold font-mono text-amber-400 mt-1">{"18,450 HRS"}</p>
-              </div>
-            
-              <div key="DAMAGE DEPOSIT RESERVE" className="p-4 rounded-xl bg-zinc-900/60 border border-zinc-800/80 backdrop-blur-sm">
-                <span className="text-xs font-semibold tracking-wider font-mono text-zinc-400 uppercase tracking-wider block">DAMAGE DEPOSIT RESERVE</span>
-                <p className="text-lg sm:text-xl font-bold font-mono text-amber-400 mt-1">{"$380,000"}</p>
-              </div>
-            
-          </div>
-        </div>
-      </section>
-
-      {/* Showcase Grid */}
-      <section id="inventory" className="py-20 px-6 max-w-7xl mx-auto">
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-12">
-          <div>
-            <span className="text-xs font-mono text-amber-500 uppercase tracking-widest block mb-2">OPERATIONAL LINEUP</span>
-            <h3 className="text-3xl font-extrabold text-white">Featured Fleet & Priority Units</h3>
-          </div>
-          <span className="text-sm text-zinc-400 mt-2 md:mt-0 font-mono">100% Inspected & Live Telematics Connected</span>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {ITEMS.map((item) => (
-            <div 
-              key={item.id}
-              className="group rounded-2xl bg-[#121214] border border-zinc-800 hover:border-amber-500/40 transition-all overflow-hidden flex flex-col shadow-xl"
-            >
-              <div className="relative h-56 overflow-hidden bg-zinc-900">
-                <img 
-                  src={item.img} 
-                  alt={item.title}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" 
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#121214] via-transparent to-transparent"></div>
-                <div className="absolute top-4 right-4 px-2.5 py-1 rounded bg-black/70 backdrop-blur-md border border-zinc-700 text-xs font-semibold font-mono font-bold text-amber-400">
-                  {item.status}
+      {/* Main Console Layout */}
+      <div className="flex-1 flex overflow-hidden">
+        {/* Left Utility Rail */}
+        <aside className="w-64 border-r border-zinc-800 bg-[#0E1015] p-5 hidden md:flex flex-col justify-between shrink-0 font-mono text-sm">
+          <div className="space-y-6">
+            <div>
+              <div className="text-xs uppercase tracking-widest text-zinc-500 mb-2 font-bold">Yard Telemetry</div>
+              <div className="space-y-2 text-xs">
+                <div className="p-3 bg-zinc-900/80 border border-zinc-800 rounded-lg">
+                  <div className="text-zinc-400">Total Asset Value</div>
+                  <div className="text-lg font-black text-amber-400">$3.85M FLEET</div>
                 </div>
-              </div>
-
-              <div className="p-6 flex-1 flex flex-col justify-between">
-                <div>
-                  <span className="text-xs font-mono text-amber-400 uppercase tracking-wider block mb-1">{item.id}</span>
-                  <h4 className="text-xl font-bold text-white mb-2 leading-tight">{item.title}</h4>
-                  <p className="text-base text-zinc-200 leading-relaxed mb-4">{item.subtitle}</p>
-
-                  <div className="space-y-2 mb-6">
-                    {item.features.map((feat, i) => (
-                      <div key={i} className="flex items-center gap-2 text-xs text-zinc-300 font-mono">
-                        <Check className="w-3.5 h-3.5 text-amber-400 flex-shrink-0" />
-                        <span>{feat}</span>
-                      </div>
-                    ))}
-                  </div>
+                <div className="p-3 bg-zinc-900/80 border border-zinc-800 rounded-lg">
+                  <div className="text-zinc-400">Fleet Utilization</div>
+                  <div className="text-lg font-black text-emerald-400">84.2% DEPLOYED</div>
                 </div>
-
-                <div className="pt-4 border-t border-zinc-800/80 flex items-center justify-between">
-                  <span className="text-sm font-bold text-amber-400 font-mono">{item.rate}</span>
-                  <a
-                    href="#dispatch"
-                    onClick={() => setSelectedItem(item.id)}
-                    className="px-3 py-1.5 rounded-lg bg-zinc-800 hover:bg-amber-500 hover:text-zinc-950 text-zinc-200 text-xs font-semibold transition"
-                  >
-                    Reserve Unit
-                  </a>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* Booking / Dispatch Intake */}
-      <section id="dispatch" className="py-20 px-6 bg-zinc-950 border-t border-zinc-800">
-        <div className="max-w-4xl mx-auto">
-          <div className="text-center mb-12">
-            <span className="text-xs font-mono text-amber-500 uppercase tracking-widest block mb-2">INSTANT BOOKING DISPATCH</span>
-            <h3 className="text-3xl font-extrabold text-white">Reserve Machinery or File Dispatch Mandate</h3>
-            <p className="text-zinc-400 text-sm mt-3">Direct integration into PostgreSQL delivery dispatches with zero friction.</p>
-          </div>
-
-          <form onSubmit={handleSubmit} className="p-8 rounded-2xl bg-[#121214] border border-amber-500/20 shadow-2xl space-y-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div>
-                <label className="block text-sm font-semibold font-mono uppercase text-zinc-400 mb-2">Company / Mandate Entity</label>
-                <input
-                  type="text"
-                  required
-                  value={inquiryName}
-                  onChange={(e) => setInquiryName(e.target.value)}
-                  placeholder="e.g. Apex Infrastructure Partners LLC"
-                  className="w-full px-4 py-3 bg-zinc-900 border border-zinc-700 rounded-xl text-zinc-100 focus:outline-none focus:border-amber-500 text-sm font-sans"
-                />
-              </div>
-              <div>
-                <label className="block text-sm font-semibold font-mono uppercase text-zinc-400 mb-2">Dispatch Contact Direct Line</label>
-                <input
-                  type="tel"
-                  required
-                  value={inquiryPhone}
-                  onChange={(e) => setInquiryPhone(e.target.value)}
-                  placeholder="+1 (555) 019-2834"
-                  className="w-full px-4 py-3 bg-zinc-900 border border-zinc-700 rounded-xl text-zinc-100 focus:outline-none focus:border-amber-500 text-sm font-sans"
-                />
               </div>
             </div>
 
             <div>
-              <label className="block text-sm font-semibold font-mono uppercase text-zinc-400 mb-2">Selected Priority Asset</label>
-              <select
-                value={selectedItem}
-                onChange={(e) => setSelectedItem(e.target.value)}
-                className="w-full px-4 py-3 bg-zinc-900 border border-zinc-700 rounded-xl text-zinc-100 focus:outline-none focus:border-amber-500 text-sm font-sans"
-              >
-                {ITEMS.map((item) => (
-                  <option key={item.id} value={item.id}>
-                    {item.id} - {item.title} ({item.rate})
-                  </option>
+              <div className="text-xs uppercase tracking-widest text-zinc-500 mb-2 font-bold">Status Filters</div>
+              <div className="space-y-1">
+                {[
+                  { id: 'ALL', label: 'All Machines', count: MACHINES.length },
+                  { id: 'READY', label: 'Ready in Yard', count: MACHINES.filter(m => m.status === 'READY').length },
+                  { id: 'ON RENT', label: 'On Jobsite', count: MACHINES.filter(m => m.status === 'ON RENT').length },
+                  { id: 'INSPECTION', label: 'Service / Recert', count: MACHINES.filter(m => m.status === 'INSPECTION').length }
+                ].map(filter => (
+                  <button
+                    key={filter.id}
+                    onClick={() => setSelectedCategory(filter.id)}
+                    className={`w-full text-left px-3 py-2 rounded-lg text-xs font-bold transition-all flex items-center justify-between ${
+                      selectedCategory === filter.id 
+                        ? 'bg-amber-500 text-black' 
+                        : 'text-zinc-300 hover:bg-zinc-800/60'
+                    }`}
+                  >
+                    <span>{filter.label}</span>
+                    <span className="text-[11px] font-mono opacity-80">{filter.count}</span>
+                  </button>
                 ))}
-              </select>
+              </div>
+            </div>
+          </div>
+
+          <div className="pt-4 border-t border-zinc-800 text-[11px] text-zinc-500">
+            <div>DOT Lowboy Dispatch: Active</div>
+            <div>OSHA Reg: 1926.1400 Certified</div>
+          </div>
+        </aside>
+
+        {/* Center Live Triage Board */}
+        <main className="flex-1 p-6 overflow-y-auto space-y-6">
+          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+            <div>
+              <h1 className="text-2xl font-black text-white tracking-tight flex items-center gap-2">
+                <Truck className="text-amber-500" /> Yard Fleet Triage & Mobilization Deck
+              </h1>
+              <p className="text-sm text-zinc-400 mt-1">
+                Select equipment to inspect machine telemetry, load charts, and initiate immediate jobsite transport.
+              </p>
+            </div>
+            <div className="text-xs font-mono px-3 py-1.5 bg-zinc-900 border border-zinc-700 rounded-lg text-zinc-300">
+              Showing {filtered.length} Machines
+            </div>
+          </div>
+
+          {/* Machine Grid */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+            {filtered.map(machine => (
+              <div 
+                key={machine.id}
+                onClick={() => handleInspect(machine)}
+                className={`p-5 rounded-xl border transition-all cursor-pointer bg-[#111318] hover:border-amber-500/60 group relative ${
+                  selectedMachine.id === machine.id ? 'border-amber-500 ring-1 ring-amber-500/30' : 'border-zinc-800'
+                }`}
+              >
+                <div className="flex gap-4">
+                  <img 
+                    src={machine.img} 
+                    alt={machine.model}
+                    className="w-28 h-28 object-cover rounded-lg border border-zinc-800 shrink-0" 
+                  />
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center justify-between gap-2">
+                      <span className="font-mono text-xs text-amber-400 font-bold">{machine.id}</span>
+                      <span className={`text-[11px] font-mono px-2 py-0.5 rounded font-bold uppercase ${
+                        machine.status === 'READY' ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/30' :
+                        machine.status === 'ON RENT' ? 'bg-blue-500/20 text-blue-400 border border-blue-500/30' :
+                        'bg-rose-500/20 text-rose-400 border border-rose-500/30'
+                      }`}>
+                        {machine.status}
+                      </span>
+                    </div>
+
+                    <h3 className="font-bold text-white text-base mt-1 group-hover:text-amber-400 transition-colors truncate">
+                      {machine.model}
+                    </h3>
+                    <p className="text-xs text-zinc-400 mt-0.5">{machine.category} • {machine.weight}</p>
+
+                    <div className="grid grid-cols-3 gap-2 mt-3 pt-3 border-t border-zinc-800/80 font-mono text-[11px]">
+                      <div>
+                        <span className="text-zinc-500 block">Hours</span>
+                        <span className="text-zinc-200 font-bold">{machine.hours} hrs</span>
+                      </div>
+                      <div>
+                        <span className="text-zinc-500 block">Fuel Level</span>
+                        <span className="text-amber-400 font-bold">{machine.fuel}%</span>
+                      </div>
+                      <div>
+                        <span className="text-zinc-500 block">Day Rate</span>
+                        <span className="text-emerald-400 font-bold">${machine.dayRate}</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </main>
+
+        {/* Slide-out Inspection Drawer */}
+        {isDrawerOpen && (
+          <aside className="w-full sm:w-[480px] bg-[#111318] border-l border-zinc-800 p-6 overflow-y-auto flex flex-col justify-between font-sans shrink-0 fixed sm:relative right-0 top-0 bottom-0 z-40 shadow-2xl">
+            <div>
+              <div className="flex items-center justify-between pb-4 border-b border-zinc-800">
+                <div className="flex items-center gap-2">
+                  <Sliders size={18} className="text-amber-500" />
+                  <span className="font-mono text-sm font-bold text-zinc-200">INSPECTION DRAWER</span>
+                </div>
+                <button 
+                  onClick={() => setIsDrawerOpen(false)}
+                  className="p-1 text-zinc-400 hover:text-white rounded-lg hover:bg-zinc-800"
+                >
+                  <X size={18} />
+                </button>
+              </div>
+
+              <div className="mt-5 space-y-4">
+                <img 
+                  src={selectedMachine.img} 
+                  alt={selectedMachine.model}
+                  className="w-full h-44 object-cover rounded-xl border border-zinc-800" 
+                />
+
+                <div>
+                  <div className="flex justify-between items-center text-xs font-mono text-amber-500">
+                    <span>{selectedMachine.id}</span>
+                    <span>S/N: {selectedMachine.serial}</span>
+                  </div>
+                  <h2 className="text-xl font-black text-white mt-1">{selectedMachine.model}</h2>
+                  <p className="text-xs text-zinc-400">{selectedMachine.location}</p>
+                </div>
+
+                {/* Technical Specifications */}
+                <div className="bg-zinc-900/90 border border-zinc-800 rounded-xl p-4 space-y-2.5 font-mono text-xs">
+                  <div className="text-zinc-400 font-bold uppercase tracking-wider text-[11px] mb-1">Telematics & Rigging</div>
+                  <div className="flex justify-between pb-1.5 border-b border-zinc-800">
+                    <span className="text-zinc-400">Powertrain</span>
+                    <span className="text-zinc-200 font-bold text-right">{selectedMachine.specs.engine}</span>
+                  </div>
+                  <div className="flex justify-between pb-1.5 border-b border-zinc-800">
+                    <span className="text-zinc-400">Tool Attachment</span>
+                    <span className="text-zinc-200 font-bold text-right">{selectedMachine.specs.capacity}</span>
+                  </div>
+                  <div className="flex justify-between pb-1.5 border-b border-zinc-800">
+                    <span className="text-zinc-400">Aux Hydraulic Flow</span>
+                    <span className="text-zinc-200 font-bold">{selectedMachine.specs.flow}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span className="text-zinc-400">Live Pressure</span>
+                    <span className="text-emerald-400 font-bold">{selectedMachine.hydraulics}</span>
+                  </div>
+                </div>
+
+                {/* Rental Duration Calculator */}
+                <div className="bg-zinc-900/90 border border-zinc-800 rounded-xl p-4 space-y-3 font-mono text-xs">
+                  <div className="flex justify-between items-center">
+                    <span className="text-zinc-300 font-bold">Mobilization Period</span>
+                    <span className="text-amber-400 font-black">{rentalDays} Days</span>
+                  </div>
+                  <input 
+                    type="range" 
+                    min="1" 
+                    max="30" 
+                    value={rentalDays} 
+                    onChange={e => setRentalDays(Number(e.target.value))}
+                    className="w-full accent-amber-500" 
+                  />
+                  <div className="flex justify-between pt-2 border-t border-zinc-800 text-sm">
+                    <span className="text-zinc-400">Estimated Total:</span>
+                    <span className="text-emerald-400 font-black text-base">
+                      ${calculateEstimate(selectedMachine, rentalDays).toLocaleString()} USD
+                    </span>
+                  </div>
+                </div>
+              </div>
             </div>
 
-            <button
-              type="submit"
-              className="w-full py-4 rounded-xl bg-amber-500 hover:bg-amber-400 text-zinc-950 font-extrabold text-sm uppercase tracking-wider transition shadow-lg shadow-amber-500/20"
-            >
-              {submitted ? '✓ MANDATE REGISTERED & TRANSMITTED' : 'SUBMIT DISPATCH RESERVATION REQUEST'}
-            </button>
-          </form>
-        </div>
-      </section>
+            {/* Action Buttons */}
+            <div className="pt-4 border-t border-zinc-800 space-y-2 font-mono">
+              {dispatchSuccess ? (
+                <div className="p-3 bg-emerald-500/20 border border-emerald-500 text-emerald-400 rounded-xl text-center text-xs font-bold">
+                  ✓ MOBILIZATION DISPATCH ORDER GENERATED
+                </div>
+              ) : (
+                <button
+                  onClick={() => setDispatchSuccess(true)}
+                  disabled={selectedMachine.status === 'ON RENT'}
+                  className="w-full py-3.5 bg-amber-500 hover:bg-amber-400 disabled:bg-zinc-800 disabled:text-zinc-600 text-black font-black text-sm rounded-xl transition-all shadow-lg shadow-amber-500/20 cursor-pointer min-h-[44px]"
+                >
+                  {selectedMachine.status === 'ON RENT' ? 'UNIT CURRENTLY DEPLOYED' : 'DISPATCH TO JOBSITE NOW'}
+                </button>
+              )}
+            </div>
+          </aside>
+        )}
+      </div>
 
-      {/* Footer */}
-      <footer className="py-12 px-6 border-t border-zinc-800 bg-[#0A0A0B] text-zinc-300 text-xs font-mono">
-        <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
-          <div>
-            <span className="text-zinc-300 font-bold">HEAVY PLANT RENTAL OS</span> • Commercial Operating System v1.0.0
-          </div>
-          <div className="flex items-center gap-6">
-            <span>Ghost Factory™ Protocol</span>
-            <span>Supabase RLS Enforced</span>
-            <button
-              onClick={() => setIsAdminOpen(true)}
-              className="text-amber-400 hover:underline"
-            >
-              Admin Portal (plant2026)
-            </button>
-          </div>
-        </div>
-      </footer>
-
-      {/* Admin Modal */}
       <AdminPortalModal isOpen={isAdminOpen} onClose={() => setIsAdminOpen(false)} />
     </div>
   );
